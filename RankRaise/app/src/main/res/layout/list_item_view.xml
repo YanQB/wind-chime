@@ -6,13 +6,9 @@
               android:layout_height="match_parent">
     <TextView
         android:id="@+id/mTv_item_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
         android:text="测试文字"/>
-    <Button
-        android:id="@+id/mBu_item_certain"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
 
 </LinearLayout>

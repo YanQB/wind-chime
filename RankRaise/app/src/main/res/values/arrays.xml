@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="basic_tool">
+        <item>StringTool</item>
+    </array>
+</resources>

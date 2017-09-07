@@ -1,156 +1,75 @@
 package chime.wind.rankraise;
 
-import android.app.Activity;
-import android.inputmethodservice.Keyboard;
-import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import java.lang.reflect.Method;
+import java.util.LinkedList;
+import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import chime.wind.rankraise.base.BaseActivity;
+import chime.wind.rankraise.ui.AllGuideActivity;
 import chime.wind.rankraise.uitls.mViewHolder;
 
-public class MainActivity extends Activity {
-    private EditText mEditText;
-    KeyboardView keyboardView;
+public class MainActivity extends BaseActivity {
+
+    @Bind(R.id.listview)
+    ListView listview;
+    List<String> listdata = new LinkedList<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mEditText = (EditText) findViewById(R.id.editText);
-        //mEditText.setInputType(InputType.TYPE_NULL);
-        //mEditText.setShowSoftInputOnFocus(false);
-        if (android.os.Build.VERSION.SDK_INT <= 10) {//4.0以下 danielinbiti
-            mEditText.setInputType(InputType.TYPE_NULL);
-        } else {
-            this.getWindow().setSoftInputMode(
-                    WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-            try {
-                Class<EditText> cls = EditText.class;
-                Method setShowSoftInputOnFocus;
-                setShowSoftInputOnFocus = cls.getMethod("setShowSoftInputOnFocus",
-                        boolean.class);
-                setShowSoftInputOnFocus.setAccessible(true);
-                setShowSoftInputOnFocus.invoke(mEditText, false);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        mEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showKeyboard();
-            }
-        });
-        keyboardView = (KeyboardView)findViewById(R.id.keyboard_view);
-        keyboardView.setKeyboard(new Keyboard(this, R.xml.mykey));
-        keyboardView.setEnabled(true);
-        keyboardView.setPreviewEnabled(true);
-        keyboardView.setPreviewEnabled(false);
-        keyboardView.setOnKeyboardActionListener(new KeyboardView.OnKeyboardActionListener() {
-            @Override
-            public void onPress(int i) {
+    protected int setContentView() {
+        return R.layout.activity_main;
+    }
 
-            }
-
+    @Override
+    protected void onAfterCreate(Bundle savedInstanceState) {
+        ButterKnife.bind(this);
+        listdata.add("基本工具");
+        Mapapter mapapter = new Mapapter();
+        listview.setAdapter(mapapter);
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onRelease(int i) {
-
-            }
-
-            @Override
-            public void onKey(int i, int[] ints) {
-                Editable editable = mEditText.getText();
-                int start = mEditText.getSelectionStart();
-                if (i == Keyboard.KEYCODE_DELETE) {// 回退
-                    if (editable != null && editable.length() > 0) {
-                        if (start > 0) {
-                            editable.delete(start - 1, start);
-                        }
-                    }
-                }else if(i == Keyboard.KEYCODE_CANCEL){
-                    hideKeyboard();
-                }else if (i == 4896) {// 清空
-                    editable.clear();
-                } else { //将要输入的数字现在编辑框中
-                    editable.insert(start, Character.toString((char) i));
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String str = listdata.get(i);
+                if (str.equals("基本工具")) {
+                    push(mContent, AllGuideActivity.class);
                 }
             }
-
-            @Override
-            public void onText(CharSequence charSequence) {
-
-            }
-
-            @Override
-            public void swipeLeft() {
-
-            }
-
-            @Override
-            public void swipeRight() {
-
-            }
-
-            @Override
-            public void swipeDown() {
-
-            }
-
-            @Override
-            public void swipeUp() {
-
-            }
         });
     }
-    private void showKeyboard() {
-        int visibility = keyboardView.getVisibility();
-        if (visibility == View.GONE || visibility == View.INVISIBLE) {
-            keyboardView.setVisibility(View.VISIBLE);
-        }
-    }
 
-    private void hideKeyboard() {
-        int visibility = keyboardView.getVisibility();
-        if (visibility == View.VISIBLE) {
-            keyboardView.setVisibility(View.INVISIBLE);
-        }
-    }
-    class apapter extends BaseAdapter {
+    class Mapapter extends BaseAdapter {
 
         @Override
         public int getCount() {
-            return 0;
+            return listdata.size();
         }
 
         @Override
-        public Object getItem(int i) {
-            return null;
+        public String getItem(int i) {
+            return listdata.get(i);
         }
 
         @Override
         public long getItemId(int i) {
-            return 0;
+            return i;
         }
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            if(null == view){
-                view = LayoutInflater.from(MainActivity.this).inflate(R.layout.list_item_view,viewGroup);
+            if (null == view) {
+                view = LayoutInflater.from(MainActivity.this).inflate(R.layout.list_item_view, null);
             }
-            TextView mTv_item_content = mViewHolder.get(view,R.id.mTv_item_content);
-            Button mBu_item_certain = mViewHolder.get(view,R.id.mBu_item_certain);
-
+            TextView mTv_item_content = mViewHolder.get(view, R.id.mTv_item_content);
+            mTv_item_content.setText(getItem(i));
             return view;
         }
     }
