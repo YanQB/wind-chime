@@ -1,6 +1,7 @@
 package chime.wind.rankraise.ui;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -42,14 +43,21 @@ public class AllGuideActivity extends BaseActivity {
         commonListAdapter = new CommonListAdapter<String>(mContent, R.layout.itme_all_guide, datalist) {
             @Override
             protected void fillItemData(CommonListViewHolder viewHolder, int position, String item) {
-
+                viewHolder.setTextForTextView(R.id.text, item);
             }
         };
         listView.setAdapter(commonListAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String str = (String) adapterView.getAdapter().getItem(i);
+                if (!TextUtils.isEmpty(str)) {
+                    if (str.equals("StringTool")) {
 
+                    } else if (str.equals("自定义键盘")) {
+                        push(mContent, MkeyBoarActivity.class);
+                    }
+                }
             }
         });
     }

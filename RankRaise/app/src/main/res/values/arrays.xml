@@ -2,5 +2,6 @@
 <resources>
     <array name="basic_tool">
         <item>StringTool</item>
+        <item>自定义键盘</item>
     </array>
 </resources>
