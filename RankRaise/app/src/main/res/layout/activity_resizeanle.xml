@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="全面屏，特长纵横比（16:9 以上）和圆角的设计,更大纵横比的屏幕可以带给用户强烈的沉浸感，
+     但没有经过优化的应用也就会更容易被用户感知到，这甚至会带来一些负面的体验
+     1.在布局上留下大概 16dp 的边缘空间(响应式 UI)
+     2.声明最大支持纵横比,兼容模式会将应用边缘的显示空间以填充
+     针对 API level 26 或以上: 利用 android:maxAspectRatio 属性。
+     针对 API level 25 或以下: 利用 android.max_aspect meta-data。
+     需要注意的一点是最大支持纵横比的值只对不支持 resizableActivity 的 Activity 才有效。
+     Android 7.0 以上的版本更为开发者提供了多窗口的标准支持" />
+
+    </LinearLayout>
+</LinearLayout>

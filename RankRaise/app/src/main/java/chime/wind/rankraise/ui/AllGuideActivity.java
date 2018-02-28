@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Switch;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -51,12 +52,15 @@ public class AllGuideActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String str = (String) adapterView.getAdapter().getItem(i);
-                if (!TextUtils.isEmpty(str)) {
-                    if (str.equals("StringTool")) {
-
-                    } else if (str.equals("自定义键盘")) {
+                switch (str) {
+                    case "StringTool":
+                        break;
+                    case "自定义键盘":
                         push(mContent, MkeyBoarActivity.class);
-                    }
+                        break;
+                    case "MultiType":
+                        push(mContent,MultiTypeActivity.class);
+                        break;
                 }
             }
         });
