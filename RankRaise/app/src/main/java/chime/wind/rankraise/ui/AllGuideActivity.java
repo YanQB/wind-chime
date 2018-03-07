@@ -7,6 +7,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Switch;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,6 +20,8 @@ import chime.wind.rankraise.R;
 import chime.wind.rankraise.base.BaseActivity;
 import chime.wind.rankraise.base.list.CommonListAdapter;
 import chime.wind.rankraise.base.list.CommonListViewHolder;
+import chime.wind.rankraise.message.MessageEvent;
+import chime.wind.rankraise.network.vo.CategoryVo;
 
 /**
  * 引导界面
@@ -61,8 +67,32 @@ public class AllGuideActivity extends BaseActivity {
                     case "MultiType":
                         push(mContent,MultiTypeActivity.class);
                         break;
+                    case "EvenBus":
+                        push(mContent,EventBusActivity.class);
+                        break;
                 }
             }
         });
+
+        //EventBus注册事件
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //EventBus解除事件
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void event(Object o){
+        if(o instanceof MessageEvent){
+            MessageEvent messageEvent = (MessageEvent)o;
+            showToast(messageEvent.getMessage());
+        }else if(o instanceof CategoryVo){
+            CategoryVo messageEvent = (CategoryVo)o;
+            showToast(messageEvent.getText());
+        }
     }
 }

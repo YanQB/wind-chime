@@ -18,6 +18,7 @@
         <activity android:name=".ui.MkeyBoarActivity" />
         <activity android:name=".ui.AllGuideActivity"/>
         <activity android:name=".ui.MultiTypeActivity"/>
+        <activity android:name=".ui.EventBusActivity"/>
     </application>
 
 </manifest>

@@ -33,4 +33,7 @@ dependencies {
     //multitype
     compile 'me.drakeet.multitype:multitype:3.0.0'
     compile 'com.android.support:recyclerview-v7:26.0.0-alpha1'
+
+    //eventbus:3.0.0
+    compile 'org.greenrobot:eventbus:3.0.0'
 }
